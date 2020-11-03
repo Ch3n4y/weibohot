@@ -7,8 +7,7 @@
       ref="echarts1"
       class="my-chart"
     />
-        <router-link to="/" class="backBtn" tag="span">返回</router-link>
-
+    <router-link to="/" class="backBtn" tag="span">返回</router-link>
   </div>
 </template>
 <script>
@@ -27,7 +26,7 @@ export default {
     return {
       line: {},
       uuid: this.$route.params.uuid,
-      title: ""
+      title: "",
     };
   },
   methods: {
@@ -56,6 +55,12 @@ export default {
               backgroundColor: "#6a7985",
             },
           },
+        },
+        lineStyle: {
+          color: "rgba(124, 181, 236)",
+        },
+        itemStyle: {
+            color: "rgba(124, 181, 236)",
         },
         legend: {},
         xAxis: {
@@ -138,7 +143,7 @@ export default {
 .my-chart {
   width: 100%;
 }
-.body{
+.body {
   text-align: center;
 }
 .backBtn {
