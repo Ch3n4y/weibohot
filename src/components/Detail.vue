@@ -112,6 +112,7 @@ export default {
             title: "请求成功",
             message: "数据加载成功",
             type: "success",
+            position:"bottom-right",
           });
         })
         .catch((error) => {

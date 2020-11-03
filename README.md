@@ -3,7 +3,7 @@
 
 ## 技术栈
 - 前端：技术主要使用的 Vue + Element-UI 
-- 后端：采用 Python 爬虫、Fask-API作为数据来源、使用MonogoDB存储，并采用 Docker-compose 一键式部署。  
+- 后端：采用 Python 爬虫、Fask-API 作为数据来源、使用 MonogoDB 存储，并采用 Docker-compose 一键式部署。  
 
 ___
 ## 如何部署
