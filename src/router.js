@@ -8,7 +8,7 @@ const routers = [
     name: 'index',
     component: index,
     meta: {
-      keepAlive: true, //此组件不需要被缓存
+      keepAlive: true,
     }
   },
   {
@@ -23,7 +23,7 @@ const routers = [
     path: '*',
     component: NotFound,
     meta: {
-      keepAlive: true, //此组件不需要被缓存
+      keepAlive: true,
     }
   }
 ]

@@ -1,39 +1,31 @@
 <template>
   <div class="body">
-    <div ref="content">
-      <el-row>
-        <el-col v-for="o in currentData" :key="o.uuid" class="v-card">
-          <el-card class="box-card">
-            <div slot="header" class="clearfix">
-              <span @click="detail(o.uuid)" class="v-card-title">{{
-                o.title.slice(0, 14)
-              }}</span>
-            </div>
-            <div class="text item">最高热度：{{ o.star / 10000 }} 万</div>
-            <div class="text item">
-              开始时间：{{
-                $dayjs.unix(o.start_time).format("YYYY-MM-DD HH:mm:ss")
-              }}
-            </div>
-            <div class="text item">
-              上次更新：{{ dispose(o.end_time * 1000) }}
-            </div>
-          </el-card>
-        </el-col>
-      </el-row>
-    </div>
-    <div ref="pagination">
-      <el-row>
-        <el-pagination
-          background
-          layout="prev, pager, next"
-          :page-count="7"
-          :total="5000"
-          @current-change="handleCurrentChange"
-        >
-        </el-pagination>
-      </el-row>
-    </div>
+    <el-table :data="currentData" style="width: 100%">
+      <el-table-column prop="title" label="关键词" width=""> </el-table-column>
+      <el-table-column prop="star" label="热度" width="">
+      </el-table-column>
+      <el-table-column prop="start_time" label="开始时间"> </el-table-column>
+      <el-table-column prop="end_time" label="上次更新"> </el-table-column>
+      <el-table-column label="操作" >
+        <template slot-scope="scope">
+          <el-button
+            @click.native.prevent="handleClick(scope.$index)"
+            type="text"
+            size="small"
+          >
+            查看
+          </el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+    <el-pagination
+      background
+      layout="prev, pager, next"
+      :page-count="7"
+      :total="5000"
+      @current-change="handleCurrentChange"
+    >
+    </el-pagination>
   </div>
 </template>
 <script>
@@ -51,11 +43,14 @@ export default {
     handleCurrentChange: function (page) {
       this.rederPage(page);
     },
-    detail: function (uuid) {
-      this.$router.push({ name: "detail", params: { uuid: uuid } });
+    handleClick: function (index) {
+      // console.log(index)
+      this.$router.push({
+        name: "detail",
+        params: { uuid: this.currentData[index].uuid },
+      });
     },
     rederPage: function (page) {
-      console.log(this.$refs);
       if (page == undefined || page <= 0) {
         page = 1;
       }
@@ -63,6 +58,13 @@ export default {
         .get("http://wb-api.chaney.top/list/" + page)
         .then((response) => {
           var data = response.data.data;
+          data.forEach((element, index) => {
+            data[index].star = parseInt(data[index].star / 1000);
+            data[index].start_time = this.$dayjs
+              .unix(data[index].start_time)
+              .format("YYYY-MM-DD HH:mm:ss");
+            data[index].end_time = this.dispose(data[index].end_time * 1000);
+          });
           this.currentData = data;
         })
         .catch((error) => {
@@ -134,32 +136,8 @@ export default {
 };
 </script>
 <style>
-.body {
-}
 
-.text {
-  font-size: 14px;
-}
-.item {
-  margin-bottom: 18px;
-}
-.clearfix:before,
-.clearfix:after {
-  display: table;
-  content: "";
-}
-.clearfix:after {
-  clear: both;
-}
-.v-card {
-  width: 280px !important;
-  margin: 5px 5px 5px 5px;
-}
-.v-card-title {
-  cursor: pointer;
-}
 .el-pagination {
   margin-top: 20px;
-  text-align: center;
 }
 </style>
