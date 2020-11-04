@@ -16,7 +16,7 @@ const routers = [
     name: 'detail',
     component: detail,
     meta: {
-      keepAlive: false, //此组件不需要被缓存
+      keepAlive: false,
     }
   },
   {

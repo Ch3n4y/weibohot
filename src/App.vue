@@ -20,3 +20,8 @@ export default {
   },
 };
 </script>
+<style>
+.el-main {
+  text-align: center;
+}
+</style>

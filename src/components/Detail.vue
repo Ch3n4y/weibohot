@@ -139,9 +139,6 @@ export default {
 .my-chart {
   width: 100%;
 }
-.el-main {
-  text-align: center;
-}
 .backBtn {
   text-align: center;
   display: inline-block;
