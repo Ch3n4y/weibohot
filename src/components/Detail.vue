@@ -1,5 +1,5 @@
 <template>
-  <div class="body">
+  <el-main>
     <h1>{{ title }}</h1>
     <v-chart
       :auto-resize="true"
@@ -8,7 +8,7 @@
       class="my-chart"
     />
     <router-link to="/" class="backBtn" tag="span">返回</router-link>
-  </div>
+  </el-main>
 </template>
 <script>
 import Echarts from "vue-echarts";
@@ -60,7 +60,7 @@ export default {
           color: "rgba(124, 181, 236)",
         },
         itemStyle: {
-            color: "rgba(124, 181, 236)",
+          color: "rgba(124, 181, 236)",
         },
         legend: {},
         xAxis: {
@@ -112,7 +112,7 @@ export default {
             title: "请求成功",
             message: "数据加载成功",
             type: "success",
-            position:"bottom-right",
+            position: "bottom-right",
           });
         })
         .catch((error) => {
@@ -133,18 +133,13 @@ export default {
     this.rederEchart();
     window.addEventListener("resize", this.resizeTheChart);
   },
-  watch: {
-    // uuid:function(newuuid,olduuid){
-    //   this.rederEchart();
-    // }
-  },
 };
 </script>
 <style>
 .my-chart {
   width: 100%;
 }
-.body {
+.el-main {
   text-align: center;
 }
 .backBtn {

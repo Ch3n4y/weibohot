@@ -5,6 +5,10 @@
 - 前端：技术主要使用的 Vue + Element-UI 
 - 后端：采用 Python 爬虫、Fask-API 作为数据来源、使用 MonogoDB 存储，并采用 Docker-compose 一键式部署。  
 
+## TODO
+- [ ] 首页搜索
+- [ ] 显示详情
+
 ___
 ## 如何部署
 ### 下载代码
