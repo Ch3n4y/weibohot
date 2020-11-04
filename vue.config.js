@@ -10,7 +10,7 @@ module.exports = {
     outputDir: 'dist',
     assetsDir: 'assets',
     lintOnSave: true,
-    runtimeCompiler: true,
+    runtimeCompiler: false,
     productionSourceMap: false,
     configureWebpack: config => {
         const plugins = [];
