@@ -11,7 +11,7 @@ module.exports = {
     assetsDir: 'assets',
     lintOnSave: true,
     runtimeCompiler: true,
-    productionSourceMap: true,
+    productionSourceMap: false,
     configureWebpack: config => {
         const plugins = [];
         if (IS_PROD) {
