@@ -19,10 +19,10 @@
     </el-form>
     <el-table :data="currentData" style="width: 100%" v-loading="table_loading">
       <el-table-column type="index" ></el-table-column>
-      <el-table-column prop="title" label="关键词" > </el-table-column>
+      <el-table-column prop="title" label="关键词" sortable> </el-table-column>
       <el-table-column prop="star" label="热度(万)" sortable> </el-table-column>
       <el-table-column prop="start_time" label="开始时间" sortable> </el-table-column>
-      <el-table-column prop="end_time" label="上次更新"> </el-table-column>
+      <el-table-column prop="end_time" label="上次更新" sortable> </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button
@@ -82,7 +82,9 @@ export default {
         data[index].start_time = this.$dayjs
           .unix(data[index].start_time)
           .format("YYYY-MM-DD HH:mm:ss");
-        data[index].end_time = this.dispose(data[index].end_time * 1000);
+        data[index].end_time = this.$dayjs
+          .unix(data[index].end_time)
+          .format("YYYY-MM-DD HH:mm:ss");
       });
       return data;
     },
@@ -119,59 +121,6 @@ export default {
           });
       }
       this.table_loading = false;
-    },
-    dispose: function (dateTimeStamp) {
-      var minute = 1000 * 60;
-
-      var hour = minute * 60;
-      var day = hour * 24;
-      var week = day * 7;
-      var halfamonth = day * 15;
-      var month = day * 30;
-      var now = new Date().getTime();
-      var diffValue = now - dateTimeStamp;
-      var result = "";
-      if (diffValue < 0) {
-        return;
-      }
-      var minC = diffValue / minute;
-      var hourC = diffValue / hour;
-      var dayC = diffValue / day;
-      var weekC = diffValue / week;
-      var monthC = diffValue / month;
-      if (hourC >= 1 && hourC <= 23) {
-        result = " " + parseInt(hourC) + "小时前";
-      } else if (minC >= 1 && minC <= 59) {
-        result = " " + parseInt(minC) + "分钟前";
-      } else if (diffValue >= 0 && diffValue <= minute) {
-        result = "刚刚";
-      } else {
-        var datetime = new Date();
-        datetime.setTime(dateTimeStamp);
-        var Nyear = datetime.getFullYear();
-        var Nmonth =
-          datetime.getMonth() + 1 < 10
-            ? "0" + (datetime.getMonth() + 1)
-            : datetime.getMonth() + 1;
-        var Ndate =
-          datetime.getDate() < 10
-            ? "0" + datetime.getDate()
-            : datetime.getDate();
-        var Nhour =
-          datetime.getHours() < 10
-            ? "0" + datetime.getHours()
-            : datetime.getHours();
-        var Nminute =
-          datetime.getMinutes() < 10
-            ? "0" + datetime.getMinutes()
-            : datetime.getMinutes();
-        var Nsecond =
-          datetime.getSeconds() < 10
-            ? "0" + datetime.getSeconds()
-            : datetime.getSeconds();
-        result = Nyear + "年" + Nmonth + "月" + Ndate + "日";
-      }
-      return result;
     },
     onSubmit: function () {
       console.log(this.formInline);
