@@ -18,11 +18,13 @@
       </el-form-item>
     </el-form>
     <el-table :data="currentData" style="width: 100%" v-loading="table_loading">
-      <el-table-column type="index" ></el-table-column>
+      <el-table-column type="index"></el-table-column>
       <el-table-column prop="title" label="关键词" sortable> </el-table-column>
       <el-table-column prop="star" label="热度(万)" sortable> </el-table-column>
-      <el-table-column prop="start_time" label="开始时间" sortable> </el-table-column>
-      <el-table-column prop="end_time" label="上次更新" sortable> </el-table-column>
+      <el-table-column prop="start_time" label="开始时间" sortable>
+      </el-table-column>
+      <el-table-column prop="end_time" label="上次更新" sortable>
+      </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button
@@ -95,8 +97,8 @@ export default {
       this.axios
         .get("http://wb-api.chaney.top/list/" + page)
         .then((response) => {
-          var data = response.data.data;
-          this.currentData = this.datato(data);
+          this.currentData = this.datato(response.data.data);
+          this.total = response.data.total;
         })
         .catch((error) => {
           this.$notify({
@@ -105,25 +107,9 @@ export default {
             type: "error",
           });
         });
-      if (this.total == 0) {
-        this.axios
-          .get("http://wb-api.chaney.top/count")
-          .then((response) => {
-            var data = response.data.data;
-            this.total = data;
-          })
-          .catch((error) => {
-            this.$notify({
-              title: "系统错误",
-              message: error,
-              type: "error",
-            });
-          });
-      }
       this.table_loading = false;
     },
     onSubmit: function () {
-      console.log(this.formInline);
       this.loading();
       if (!this.formInline.date && !this.formInline.keyword) {
         this.rederPage(1);
@@ -133,8 +119,7 @@ export default {
         .post("http://wb-api.chaney.top/search", this.formInline)
         .then((response) => {
           if (response.data.code == 0) {
-            var data = response.data.data;
-            this.currentData = this.datato(data);
+            this.currentData = this.datato(response.data.data);
             this.total = 0;
           } else {
             this.$notify({
