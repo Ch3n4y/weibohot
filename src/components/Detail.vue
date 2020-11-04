@@ -145,7 +145,6 @@ export default {
   color: #716d6d;
   margin-bottom: 20px;
   margin-top: 20px;
-
   padding: 15px 30px;
   border: 1px solid #675959;
   border-radius: 5px;
