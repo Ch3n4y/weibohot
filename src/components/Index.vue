@@ -80,7 +80,7 @@ export default {
     },
     datato: function (data) {
       data.forEach((element, index) => {
-        data[index].star = parseInt(data[index].star / 1000);
+        data[index].star = parseInt(data[index].star / 10000);
         data[index].start_time = this.$dayjs
           .unix(data[index].start_time)
           .format("YYYY-MM-DD HH:mm:ss");
