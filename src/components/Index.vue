@@ -28,7 +28,7 @@
       <el-table-column label="操作" width="50">
         <template slot-scope="scope">
           <el-button
-            @click.native.prevent="handleClick(scope.$index)"
+            @click.native.prevent="handleClick(scope.row.uuid)"
             type="text"
             size="small"
           >
@@ -72,10 +72,11 @@ export default {
     handleCurrentChange: function (page) {
       this.rederPage(page);
     },
-    handleClick: function (index) {
+    handleClick: function (uuid) {
+      // console.log(uuid);
       this.$router.push({
         name: "detail",
-        params: { uuid: this.currentData[index].uuid },
+        params: { uuid: uuid },
       });
     },
     datato: function (data) {
