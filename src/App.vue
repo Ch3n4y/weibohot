@@ -23,5 +23,6 @@ export default {
 <style>
 .el-main {
   text-align: center;
+  margin-top: 70px;
 }
 </style>
