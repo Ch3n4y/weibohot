@@ -1,6 +1,6 @@
 <template>
   <el-main>
-    <el-form :inline="true" :model="formInline" class="demo-form-inline">
+    <el-form :inline="true" :model="formInline" class="demo-form-inline" @keyup.enter.native="onSubmit">
       <el-form-item label="搜索">
         <el-input v-model="formInline.keyword" placeholder="关键词"></el-input>
       </el-form-item>
