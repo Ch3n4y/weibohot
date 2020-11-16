@@ -7,7 +7,8 @@
       ref="echarts1"
       class="my-chart"
     />
-    <router-link to="/" class="backBtn" tag="span">返回</router-link>
+    <el-button round class="back" @click="returnPage">返回</el-button>
+    <!-- <el-button round class="detail" @click="returnPage">详情</el-button> -->
   </el-main>
 </template>
 <script>
@@ -139,15 +140,7 @@ export default {
 .my-chart {
   width: 100%;
 }
-.backBtn {
-  text-align: center;
-  display: inline-block;
-  color: #716d6d;
-  margin-bottom: 20px;
-  margin-top: 20px;
-  padding: 15px 30px;
-  border: 1px solid #675959;
-  border-radius: 5px;
-  cursor: pointer;
+.back,detail{
+  margin: 20px 0 20px 10px;
 }
 </style>

@@ -25,12 +25,12 @@
       </el-table-column>
       <el-table-column prop="end_time" label="上次更新" sortable>
       </el-table-column>
-      <el-table-column label="操作" width="50">
+      <el-table-column label="操作" width="100">
         <template slot-scope="scope">
           <el-button
             @click.native.prevent="handleClick(scope.row.uuid)"
-            type="text"
             size="small"
+            round
           >
             查看
           </el-button>

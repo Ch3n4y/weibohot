@@ -22,7 +22,7 @@ const routers = [
   {
     path: '*',
     component: NotFound,
-    meta: {
+    meta: { 
       keepAlive: true,
     }
   }
