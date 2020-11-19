@@ -8,7 +8,7 @@
       class="my-chart"
     />
     <el-button round class="back" @click="returnPage">返回</el-button>
-    <!-- <el-button round class="detail" @click="returnPage">详情</el-button> -->
+    <el-button round class="detail" @click="toWeibo">详情</el-button>
   </el-main>
 </template>
 <script>
@@ -38,6 +38,10 @@ export default {
       } else {
         this.$router.go(-1);
       }
+    },
+    toWeibo: function () {
+      let to = "https://weibo.com/search/weibo?q=" + this.title;
+      window.open(to, "_blank");
     },
     creatEcharts: function (data) {
       this.title = data.title;
@@ -140,7 +144,8 @@ export default {
 .my-chart {
   width: 100%;
 }
-.back,detail{
+.back,
+detail {
   margin: 20px 0 20px 10px;
 }
 </style>
