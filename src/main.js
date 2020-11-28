@@ -10,10 +10,13 @@ import VueAxios from 'vue-axios'
 import dayjs from "dayjs";
 Vue.prototype.$dayjs = dayjs;
 Vue.config.productionTip = false;
+axios.defaults.baseURL = 'https://wb-api.chaney.top';
 
 Vue.use(ElementUI);
 Vue.use(VueRouter);
 Vue.use(VueAxios, axios)
+
+
 
 const router = new VueRouter({
   routes: routers

@@ -109,7 +109,7 @@ export default {
     },
     rederEchart: function () {
       this.axios
-        .get("http://wb-api.chaney.top/one/" + this.uuid)
+        .get("/one/" + this.uuid)
         .then((response) => {
           var data = response.data.data;
           this.creatEcharts(data);

@@ -96,7 +96,7 @@ export default {
         page = 1;
       }
       this.axios
-        .get("http://wb-api.chaney.top/list/" + page)
+        .get("/list/" + page)
         .then((response) => {
           this.currentData = this.datato(response.data.data);
           this.total = response.data.total;
