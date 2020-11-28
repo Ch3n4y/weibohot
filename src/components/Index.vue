@@ -117,7 +117,7 @@ export default {
         return;
       }
       this.axios
-        .post("http://wb-api.chaney.top/search", this.formInline)
+        .post("/search", this.formInline)
         .then((response) => {
           if (response.data.code == 0) {
             this.currentData = this.datato(response.data.data);
