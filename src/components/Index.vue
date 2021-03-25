@@ -1,6 +1,11 @@
 <template>
   <el-main>
-    <el-form :inline="true" :model="formInline" class="demo-form-inline" @keyup.enter.native="onSubmit">
+    <el-form
+      :inline="true"
+      :model="formInline"
+      class="demo-form-inline"
+      @keyup.enter.native="onSubmit"
+    >
       <el-form-item label="搜索">
         <el-input v-model="formInline.keyword" placeholder="关键词"></el-input>
       </el-form-item>
@@ -17,10 +22,11 @@
         <el-button type="primary" @click="onSubmit">查询</el-button>
       </el-form-item>
     </el-form>
-    <el-table :data="currentData" v-loading="table_loading">
+    <el-table :data="currentData" v-loading="showloading">
       <el-table-column type="index" width="50"></el-table-column>
       <el-table-column prop="title" label="关键词" sortable> </el-table-column>
-      <el-table-column prop="star" label="热度(万)" sortable width="100"> </el-table-column>
+      <el-table-column prop="star" label="热度(万)" sortable width="100">
+      </el-table-column>
       <el-table-column prop="start_time" label="开始时间" sortable>
       </el-table-column>
       <el-table-column prop="end_time" label="上次更新" sortable>
@@ -56,7 +62,7 @@ export default {
       currentPage: 1,
       total: 0,
       currentData: [],
-      table_loading: true,
+      showloading: true,
       formInline: {
         keyword: "",
         date: "",
@@ -69,11 +75,7 @@ export default {
     };
   },
   methods: {
-    handleCurrentChange: function (page) {
-      this.rederPage(page);
-    },
     handleClick: function (uuid) {
-      // console.log(uuid);
       this.$router.push({
         name: "detail",
         params: { uuid: uuid },
@@ -100,6 +102,7 @@ export default {
         .then((response) => {
           this.currentData = this.datato(response.data.data);
           this.total = response.data.total;
+          this.showloading = false;
         })
         .catch((error) => {
           this.$notify({
@@ -108,7 +111,10 @@ export default {
             type: "error",
           });
         });
-      this.table_loading = false;
+    },
+    handleCurrentChange: function (page) {
+      this.loading();
+      this.rederPage(page);
     },
     onSubmit: function () {
       this.loading();
@@ -128,6 +134,7 @@ export default {
               type: "error",
             });
           }
+          this.showloading = false;
         })
         .catch((error) => {
           this.$notify({
@@ -136,12 +143,10 @@ export default {
             type: "error",
           });
         });
-      this.table_loading = false;
     },
     loading: function () {
       this.currentData = [];
-      this.table_loading = true;
-      this.total = 0;
+      this.showloading = true;
     },
   },
   mounted: function () {

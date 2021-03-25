@@ -3,12 +3,15 @@
     <h1>{{ title }}</h1>
     <v-chart
       :auto-resize="true"
-      :options="line"
+      :options="orgOptions"
       ref="echarts1"
+      theme="ovilia-green"
+      v-loading="btndisable"
       class="my-chart"
     />
     <el-button round class="back" @click="returnPage">返回</el-button>
-    <el-button round class="detail" @click="toWeibo">详情</el-button>
+    <el-button round class="detail" @click="toWeibo" :disabled="btndisable">详情</el-button
+    >
   </el-main>
 </template>
 <script>
@@ -25,9 +28,10 @@ export default {
   },
   data: function () {
     return {
-      line: {},
+      orgOptions: {},
       uuid: this.$route.params.uuid,
       title: "",
+      btndisable: true,
     };
   },
   methods: {
@@ -40,18 +44,26 @@ export default {
       }
     },
     toWeibo: function () {
-      let to = "https://weibo.com/search/weibo?q=" + this.title;
-      window.open(to, "_blank");
+      let toPC = "https://s.weibo.com/weibo?q=" + this.title + "&Refer=top";
+      let toMobile = "https://m.weibo.cn/p/100103type=1&q=" + this.title;
+      let p = navigator.platform;
+      if (
+        p == "Win32" ||
+        p == "Win64" ||
+        p == "MacPPC" ||
+        p == "MacIntel" ||
+        p == "X11" ||
+        p == "Linux i686"
+      ) {
+        window.open(toPC, "_blank");
+      } else {
+        window.open(toMobile, "_blank");
+      }
     },
-    creatEcharts: function (data) {
-      this.title = data.title;
+    rederEchart: function () {
       let starList = [];
       let timeList = [];
-      data.data.forEach((item) => {
-        starList.push(item.star / 10000);
-        timeList.push(this.$dayjs.unix(item.time).format("MM-DD HH:mm:ss"));
-      });
-      this.line = {
+      this.orgOptions = {
         tooltip: {
           trigger: "axis",
           axisPointer: {
@@ -72,6 +84,7 @@ export default {
           axisLine: { onZero: false },
           boundaryGap: false,
           data: timeList,
+          name: "时间",
         },
         yAxis: {
           name: "热度(万)",
@@ -106,19 +119,18 @@ export default {
           },
         ],
       };
-    },
-    rederEchart: function () {
       this.axios
         .get("/one/" + this.uuid)
         .then((response) => {
           var data = response.data.data;
-          this.creatEcharts(data);
-          this.$notify({
-            title: "请求成功",
-            message: "数据加载成功",
-            type: "success",
-            position: "bottom-right",
+          data.data.forEach((item) => {
+            starList.push(item.star / 10000);
+            timeList.push(this.$dayjs.unix(item.time).format("MM-DD HH:mm:ss"));
           });
+          this.orgOptions.series.data = starList;
+          this.orgOptions.xAxis.data = timeList;
+          this.title = data.title;
+          this.btndisable = false;
         })
         .catch((error) => {
           this.$notify({
