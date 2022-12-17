@@ -1,6 +1,6 @@
 <template>
   <el-footer class="main-footer">
-    Copyright &copy; {{ year }} Chaney. All rights reserved.
+    Copyright &copy; {{ year }} Ch3n4y. All rights reserved.
   </el-footer>
 </template>
 <script>
